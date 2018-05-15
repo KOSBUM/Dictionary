@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha14'
     }
 }
 
@@ -18,15 +18,16 @@ configurations {
     smallicu
 }
 dependencies {
-    implementation 'com.android.support:appcompat-v7:25.4.0'
-    implementation 'com.android.support:design:25.4.0'
+    implementation 'com.android.support:appcompat-v7:27.1.1'
+    implementation 'com.android.support:design:27.1.1'
     // Note: you can just replace "smallicu" by implementation
     // and remove the "compile files" part if you do not
     // care about the size of the apk
-    smallicu 'com.ibm.icu:icu4j:57.1'
+    implementation 'com.ibm.icu:icu4j:57.1'
+    /*smallicu 'com.ibm.icu:icu4j:57.1'
     implementation files("$buildDir/icu4j-57.1.small.jar") {
         builtBy 'makesmallicu'
-    }
+    }*/
 }
 
 task makesmallicu (type:Exec, dependsOn: configurations.smallicu) {
@@ -42,14 +43,14 @@ task makesmallicu (type:Exec, dependsOn: configurations.smallicu) {
 def utildir = hasProperty("quickdicUtilDir") ? quickdicUtilDir : "Util"
 
 android {
-    compileSdkVersion 26
+    compileSdkVersion 27
     buildToolsVersion "27.0.3"
     lintOptions {
         disable "MissingTranslation"
     }
     buildTypes {
         debug {
-            applicationIdSuffix ".debug"
+            //applicationIdSuffix ".debug"
         }
         release {
             minifyEnabled true
@@ -75,7 +76,8 @@ android {
     }
     defaultConfig {
         applicationId 'de.reimardoeffinger.quickdic'
-        targetSdkVersion 26
+        minSdkVersion 14
+        targetSdkVersion 27
         resConfigs "de", "es", "fr", "it", "ja", "pt", "pt-rBR", "ru"
     }
 }

@@ -32,7 +32,7 @@ import android.speech.tts.TextToSpeech.OnInitListener;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.SearchView.OnQueryTextListener;
 import android.support.v7.widget.Toolbar;
@@ -76,7 +76,6 @@ import android.widget.ListView;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.TextView.BufferType;
 import android.widget.Toast;
 
 import com.hughes.android.dictionary.DictionaryInfo.IndexInfo;
@@ -85,7 +84,6 @@ import com.hughes.android.dictionary.engine.EntrySource;
 import com.hughes.android.dictionary.engine.HtmlEntry;
 import com.hughes.android.dictionary.engine.Index;
 import com.hughes.android.dictionary.engine.Index.IndexEntry;
-import com.hughes.android.dictionary.engine.Language.LanguageResources;
 import com.hughes.android.dictionary.engine.PairEntry;
 import com.hughes.android.dictionary.engine.PairEntry.Pair;
 import com.hughes.android.dictionary.engine.RowBase;
@@ -111,7 +109,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Random;
 import java.util.Set;
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -119,8 +116,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DictionaryActivity extends ActionBarActivity {
+public class DictionaryActivity extends AppCompatActivity {
 
+    private static final String OK_GOOGLE_SEARCH = "com.google.android.gms.actions.SEARCH_ACTION";
     static final String LOG = "QuickDic";
 
     DictionaryApplication application;
@@ -363,6 +361,11 @@ public class DictionaryActivity extends ActionBarActivity {
                 dictionaryOpenFail(e);
                 return;
             }
+        }
+        if (intentAction != null && intentAction.equals(OK_GOOGLE_SEARCH)) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            if (query != null)
+                getIntent().putExtra(C.SEARCH_TOKEN, query);
         }
         /**
          * @author Dominik Köppl If no dictionary is chosen, use the default

@@ -20,12 +20,11 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 
 import com.hughes.util.StringUtil;
@@ -34,7 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 
-public final class HtmlDisplayActivity extends ActionBarActivity {
+public final class HtmlDisplayActivity extends AppCompatActivity {
 
     static final String LOG = "QuickDic";
 
